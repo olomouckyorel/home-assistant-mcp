@@ -88,6 +88,17 @@ export class HAClient {
     return response.data;
   }
 
+  /**
+   * Batch fetch entity states - RECOMMENDED for multiple entities.
+   * Returns fresh data with fetched_at, request_id. Per-entity status (ok/error).
+   */
+  async getEntitiesState(entityIds: string[]): Promise<any> {
+    const response = await this.client.post(`/api/entities/states`, {
+      entity_ids: entityIds,
+    });
+    return response.data;
+  }
+
   async renameEntity(oldEntityId: string, newEntityId: string): Promise<any> {
     const response = await this.client.post(`/api/entities/rename`, {
       old_entity_id: oldEntityId,

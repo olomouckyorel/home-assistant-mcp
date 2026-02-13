@@ -105,7 +105,7 @@ export const tools: Tool[] = [
   },
   {
     name: 'ha_get_entity_state',
-    description: '[READ-ONLY] Get entity state and attributes. Safe operation - only reads data.',
+    description: '[READ-ONLY] Get single entity state and attributes. Safe operation - only reads data. Use ha_get_entities_state for 2+ entities (batch, more efficient).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -115,6 +115,21 @@ export const tools: Tool[] = [
         },
       },
       required: ['entity_id'],
+    },
+  },
+  {
+    name: 'ha_get_entities_state',
+    description: '[READ-ONLY] Batch fetch multiple entity states in one request. RECOMMENDED when you need current state of 2+ entities. Returns fetched_at, request_id for freshness. Per-entity status (ok/error). Safe operation - only reads data.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        entity_ids: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'List of entity IDs (e.g., ["sensor.temp", "climate.bedroom", "switch.light"])',
+        },
+      },
+      required: ['entity_ids'],
     },
   },
   {

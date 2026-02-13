@@ -191,6 +191,15 @@ export const toolHandlers: Record<string, ToolHandler> = {
     return jsonResponse(result);
   },
 
+  'ha_get_entities_state': async (client, args) => {
+    const entityIds = args.entity_ids;
+    if (!Array.isArray(entityIds) || entityIds.length === 0) {
+      return jsonResponse({ success: false, error: 'entity_ids must be a non-empty array' });
+    }
+    const result = await client.getEntitiesState(entityIds);
+    return jsonResponse(result);
+  },
+
   'ha_rename_entity': async (client, args) => {
     const result = await client.renameEntity(args.old_entity_id, args.new_entity_id);
     return jsonResponse(result);
